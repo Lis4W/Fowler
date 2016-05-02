@@ -1,6 +1,3 @@
-
-import org.omg.CORBA.ACTIVITY_COMPLETED;
-
 import java.lang.*;
 import java.util.*;
 
@@ -11,7 +8,7 @@ class Customer {
         name = newname;
     };
     private double amountFor(Rental aRental) {
-        return aRental.getCharge();
+        return aRental.movie.getCharge(aRental);
     }
     public void addRental(Rental arg) {
         rentals.addElement(arg);
@@ -29,7 +26,7 @@ class Customer {
             Rental each = (Rental) rentals.nextElement();
             frequentRenterPoints += each.getFrequentRenterPoints();
             //show figures for this rental
-            result += "\t" + each.getMovie().getTitle() + "\t" + "\t" + each.getDaysRented() +"\t" + String.valueOf(each.getCharge()) + "\n";
+            result += "\t" + each.getMovie().getTitle() + "\t" + "\t" + each.getDaysRented() +"\t" + String.valueOf(each.movie.getCharge(each)) + "\n";
             //result += each.getCharge();
         }
         //add footer lines
@@ -42,7 +39,7 @@ class Customer {
        Enumeration rentals = this.rentals.elements();
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            result += each.getCharge();
+            result += each.movie.getCharge(each);
         }
         return  result;
     }
@@ -60,7 +57,7 @@ class Customer {
         String result = "<H1> Rentals for <EM>" + getName() + "</EM></H1><P>\n";
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            result += each.getMovie().getTitle() +":" + String.valueOf(each.getCharge()) + "<BR>\n";
+            result += each.getMovie().getTitle() +":" + String.valueOf(each.movie.getCharge(each)) + "<BR>\n";
         }
         result += "<P> You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
         result += "On this rental you earned <EM>" + String.valueOf(getTotalFrequentRenterPoints())+ "</EM> frequent renter points <P>";
